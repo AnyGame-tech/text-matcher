@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTF Challenge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
+    }
+    .container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #333;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      padding: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .link-btn {
+      padding: 1rem 1.5rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .link-btn:hover {
+      background-color: #1e7e34;
+    }
+    .timer {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .alert {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .important {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 400px;
+    }
+    .footer {
+      margin-top: 2rem;
+      font-size: 1rem;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom Alert Modal Above Heading -->
+  <div id="alertModal" class="alert important">
+    <strong>Important!</strong> Remember, no cheating or using AI chatbots—play fair and earn your reward in this CTF challenge!
+  </div>
+
+  <div class="container">
+    <h1>CTF Challenge</h1>
+    <p>
+      You need to get the flag to win the prize! Click the start button to begin. You have 45 minutes to complete the challenge.
+    </p>
+    
+    <button class="btn" id="startBtn">Start Challenge</button>
+
+    <!-- Timer Section: Shows the countdown timer -->
+    <div id="timerSection" style="display: none;">
+      <p class="timer" id="timeRemaining"></p>
+    </div>
+
+    <!-- Link Button to Open Flag Submission Page -->
+    <div id="linkSection" style="display: none;">
+      <a href="https://anygame-tech.github.io/text-matcher/flag.html" target="_blank" class="link-btn">
+        Open Flag Submission Page
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Made with ❤️ by Jaskaran</p>
+  </div>
+
+  <!-- Audio element for the beep sound -->
+  <audio id="beepSound" src="beep.mp3" preload="auto" loop></audio>
+
+  <script>
+    // Set the timer to 45 minutes (in seconds)
+    let timeLeft = 45 * 60;
+    const startBtn = document.getElementById('startBtn');
+    const timerSection = document.getElementById('timerSection');
+    const timeRemaining = document.getElementById('timeRemaining');
+    const linkSection = document.getElementById('linkSection');
+    const beepSound = document.getElementById('beepSound');
+
+    startBtn.addEventListener('click', function() {
+      // Trigger file download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = "CTF.zip"; // Replace with your actual file path
+      downloadLink.download = 'CTF_Challenge.zip'; // Replace with desired file name
+      downloadLink.style.display = 'none';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // Hide the start button and show the timer and link sections
+      startBtn.style.display = 'none';
+      timerSection.style.display = 'block';
+      linkSection.style.display = 'block';
+
+      // Start the countdown timer
+      const timer = setInterval(function() {
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          timeRemaining.textContent = "Remaining Time: Time's up!";
+          // Play the beep sound when time is up.
+          beepSound.play();
+          // Optionally, you can also hide the link section or disable further interactions here.
+          return;
+        }
+        timeRemaining.textContent = "Remaining Time: " + formatTime(timeLeft);
+        timeLeft -= 1;
+      }, 1000);
+    });
+
+    // Format seconds into MM:SS
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>
