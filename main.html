@@ -96,7 +96,7 @@
 <body>
   <!-- Custom Alert Modal Above Heading -->
   <div id="alertModal" class="alert important">
-    <strong>Important!</strong> Remember, no cheating or using AI chatbots play fair and earn your reward in this CTF challenge!
+    <strong>Important!</strong> Remember, no cheating or using AI chatbots—play fair and earn your reward in this CTF challenge!
   </div>
 
   <div class="container">
@@ -137,10 +137,10 @@
     const beepSound = document.getElementById('beepSound');
 
     startBtn.addEventListener('click', function() {
-      // Trigger file download
+      // Trigger file download with original file metadata
       const downloadLink = document.createElement('a');
       downloadLink.href = "CTF.zip"; // Replace with your actual file path
-      downloadLink.download = 'CTF_Challenge.zip'; // Replace with desired file name
+      // Note: Do not set the download attribute so the file name and metadata remain unchanged
       downloadLink.style.display = 'none';
       document.body.appendChild(downloadLink);
       downloadLink.click();
